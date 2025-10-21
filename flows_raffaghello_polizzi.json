@@ -1,0 +1,3974 @@
+[
+    {
+        "id": "4ae513d322723fa7",
+        "type": "tab",
+        "label": "SmartHome",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "51726077ca240c40",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "Receive armored door sensor",
+        "topic": "home/user1/sensors/door/living-room",
+        "qos": "2",
+        "datatype": "json",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 220,
+        "y": 1260,
+        "wires": [
+            [
+                "dc2e1a33a062c1e5"
+            ]
+        ]
+    },
+    {
+        "id": "dc2e1a33a062c1e5",
+        "type": "ui_text",
+        "z": "4ae513d322723fa7",
+        "group": "cbd05f1c22458a48",
+        "order": 1,
+        "width": 6,
+        "height": 1,
+        "name": "",
+        "label": "Armored door",
+        "format": "{{msg.payload.state}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 500,
+        "y": 1260,
+        "wires": []
+    },
+    {
+        "id": "2601a2ed79e58abd",
+        "type": "comment",
+        "z": "4ae513d322723fa7",
+        "name": "Door",
+        "info": "",
+        "x": 110,
+        "y": 1200,
+        "wires": []
+    },
+    {
+        "id": "cb0002ad92223496",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "",
+        "topic": "home/user1/sensors/pressure/living-room",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 220,
+        "y": 300,
+        "wires": [
+            [
+                "5464beed7f331d94"
+            ]
+        ]
+    },
+    {
+        "id": "08d27218e940e40b",
+        "type": "comment",
+        "z": "4ae513d322723fa7",
+        "name": "Sofa",
+        "info": "",
+        "x": 110,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "5464beed7f331d94",
+        "type": "function",
+        "z": "4ae513d322723fa7",
+        "name": "function 6",
+        "func": "const v = Number(msg.payload?.value);\nconst th = 500;\n\nconst msgUI   = { payload: (v > th) ? \"Occupied\" : \"Free\" };                            // → UI\nconst msgMovie = { topic: \"pressure\", payload: v };                                        // → Join Movie\nconst msgForJoin = { topic: \"salotto\", payload: (v > th) };\nreturn [ msgUI, msgMovie, msgForJoin ];\n",
+        "outputs": 3,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 300,
+        "wires": [
+            [
+                "065fbfb04c0f7ead"
+            ],
+            [
+                "58cf2af06dc07966"
+            ],
+            [
+                "07a5db61a079add6"
+            ]
+        ]
+    },
+    {
+        "id": "065fbfb04c0f7ead",
+        "type": "ui_text",
+        "z": "4ae513d322723fa7",
+        "group": "6412d33ee5244df5",
+        "order": 1,
+        "width": 6,
+        "height": 1,
+        "name": "",
+        "label": "Sofa occupancy",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 720,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "7ce5d36336feba17",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "",
+        "topic": "home/user1/sensors/pressure/studio",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 220,
+        "y": 640,
+        "wires": [
+            [
+                "1365ebf9d3a2a8d1"
+            ]
+        ]
+    },
+    {
+        "id": "9c27ba293b0db4ad",
+        "type": "comment",
+        "z": "4ae513d322723fa7",
+        "name": "Study chair",
+        "info": "",
+        "x": 130,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "1365ebf9d3a2a8d1",
+        "type": "function",
+        "z": "4ae513d322723fa7",
+        "name": "function 7",
+        "func": "const v = Number(msg.payload?.value);\nconst th = 500;\n\nconst msgUI = { payload: (v > th) ? \"Occupied\" : \"Free\" };\nconst msgForJoin = { topic: \"studio\", payload: (v > th) };\n\nreturn [ msgUI, msgForJoin ];",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 640,
+        "wires": [
+            [
+                "28c39334be8dc8a6",
+                "1adff6fb6df11301"
+            ],
+            [
+                "07a5db61a079add6"
+            ]
+        ]
+    },
+    {
+        "id": "28c39334be8dc8a6",
+        "type": "ui_text",
+        "z": "4ae513d322723fa7",
+        "group": "399f7fa3eb5f5073",
+        "order": 2,
+        "width": 6,
+        "height": 1,
+        "name": "Study chair occupancy",
+        "label": "Study chair occupancy",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 740,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "5d27dec01c027489",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "Receive study door sensor",
+        "topic": "home/user1/sensors/door/studio-door",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 210,
+        "y": 1320,
+        "wires": [
+            [
+                "33b45a7196709aa8"
+            ]
+        ]
+    },
+    {
+        "id": "33b45a7196709aa8",
+        "type": "ui_text",
+        "z": "4ae513d322723fa7",
+        "group": "399f7fa3eb5f5073",
+        "order": 1,
+        "width": 6,
+        "height": 1,
+        "name": "",
+        "label": "Study door status",
+        "format": "{{msg.payload.state}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 470,
+        "y": 1320,
+        "wires": []
+    },
+    {
+        "id": "10e14c1b4290558c",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "",
+        "topic": "home/user1/sensors/pressure/bedroom",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 270,
+        "y": 780,
+        "wires": [
+            [
+                "4fc763db6b4efb2c"
+            ]
+        ]
+    },
+    {
+        "id": "f1c2abc29f01a4c6",
+        "type": "comment",
+        "z": "4ae513d322723fa7",
+        "name": "Bed",
+        "info": "",
+        "x": 110,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "4fc763db6b4efb2c",
+        "type": "function",
+        "z": "4ae513d322723fa7",
+        "name": "function 8",
+        "func": "const v = Number(msg.payload?.value);\nconst th = 700;\n\nconst msgUI = { payload: (v > th) ? \"Occupied\" : \"Free\" };\nconst msgForJoin = { topic: \"Room\", payload: (v > th) };\n\nreturn [ msgUI, msgForJoin ];",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 840,
+        "wires": [
+            [
+                "64f8d270d8a3cd16",
+                "ec1a4caae03d3e49"
+            ],
+            [
+                "07a5db61a079add6"
+            ]
+        ]
+    },
+    {
+        "id": "64f8d270d8a3cd16",
+        "type": "ui_text",
+        "z": "4ae513d322723fa7",
+        "group": "015361052332870d",
+        "order": 2,
+        "width": 6,
+        "height": 1,
+        "name": "Bed occupancy",
+        "label": "Bed occupancy",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 710,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "fcf68e39069d7572",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "Receive bedroom door sensor",
+        "topic": "home/user1/sensors/door/bedroom",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 240,
+        "y": 1380,
+        "wires": [
+            [
+                "d6734e7ba3339780"
+            ]
+        ]
+    },
+    {
+        "id": "d6734e7ba3339780",
+        "type": "ui_text",
+        "z": "4ae513d322723fa7",
+        "group": "015361052332870d",
+        "order": 1,
+        "width": 6,
+        "height": 1,
+        "name": "",
+        "label": "Bedroom door status",
+        "format": "{{msg.payload.state}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 600,
+        "y": 1380,
+        "wires": []
+    },
+    {
+        "id": "1374075122129835",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "Receive kitchen door sensor",
+        "topic": "home/user1/sensors/door/kitchen",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 220,
+        "y": 1440,
+        "wires": [
+            [
+                "9506c4e5c9451525"
+            ]
+        ]
+    },
+    {
+        "id": "9506c4e5c9451525",
+        "type": "ui_text",
+        "z": "4ae513d322723fa7",
+        "group": "6376ecc6f540863b",
+        "order": 1,
+        "width": 5,
+        "height": 1,
+        "name": "",
+        "label": "Kitchen door status",
+        "format": "{{msg.payload.state}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 570,
+        "y": 1440,
+        "wires": []
+    },
+    {
+        "id": "d7923f657eeca2be",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "Receive bathroom door sensor",
+        "topic": "home/user1/sensors/door/bath-door",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 220,
+        "y": 1500,
+        "wires": [
+            [
+                "40efbfd83898e003"
+            ]
+        ]
+    },
+    {
+        "id": "40efbfd83898e003",
+        "type": "ui_text",
+        "z": "4ae513d322723fa7",
+        "group": "631a21d3c8abf6c0",
+        "order": 1,
+        "width": 6,
+        "height": 1,
+        "name": "",
+        "label": "Bathroom door status",
+        "format": "{{msg.payload.state}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 570,
+        "y": 1500,
+        "wires": []
+    },
+    {
+        "id": "fcf1a6c1fa5ab82a",
+        "type": "comment",
+        "z": "4ae513d322723fa7",
+        "name": "Wellness indicators",
+        "info": "",
+        "x": 190,
+        "y": 1600,
+        "wires": []
+    },
+    {
+        "id": "2e19a03b6a473064",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "Health Data",
+        "topic": "home/health/#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 190,
+        "y": 1680,
+        "wires": [
+            [
+                "adfc38e97a7c98b5"
+            ]
+        ]
+    },
+    {
+        "id": "adfc38e97a7c98b5",
+        "type": "function",
+        "z": "4ae513d322723fa7",
+        "name": "Analyze Health",
+        "func": "let data = msg.payload;\nif (typeof data === 'string') {\n  try { data = JSON.parse(data); } catch(e) { return null; }\n}\n\nlet status = \"\";\n\nif (data.steps < 3000) status = \" Low activity\";\nelse if (data.steps < 7000) status = \" Moderate activity\";\nelse status = \" High activity\";\n\nif (data.sleep < 6) status += \" |  Sleep Deprived\";\nelse if (data.sleep > 9) status += \" |  Extra Sleep\";\nelse status += \" |  Good Sleep\";\n\nif (data.rest < 1) status += \" |  Low Rest\";\nelse status += \" |  Adequate Rest\";\n\nmsg.payload = {\n  user: data.user,\n  steps: data.steps,\n  sleep: data.sleep,\n  rest: data.rest,\n  stress: data.stress,\n  status: status\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 1680,
+        "wires": [
+            [
+                "753423c39646d55d"
+            ]
+        ]
+    },
+    {
+        "id": "753423c39646d55d",
+        "type": "ui_text",
+        "z": "4ae513d322723fa7",
+        "group": "dashboard_group",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "Health Status",
+        "label": "Health Status",
+        "format": "{{msg.payload.status}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 660,
+        "y": 1680,
+        "wires": []
+    },
+    {
+        "id": "1adff6fb6df11301",
+        "type": "function",
+        "z": "4ae513d322723fa7",
+        "name": "Check Study",
+        "func": "if (msg.payload === \"Occupied\") {\n    \n    return {topic:\"Study\" , payload: \"Study\" };\n}\nelse{ return{topic:\"Study\" ,payload: \"reset\"}}",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1380,
+        "y": 520,
+        "wires": [
+            [
+                "a27d191d2f5a158d"
+            ]
+        ]
+    },
+    {
+        "id": "ec1a4caae03d3e49",
+        "type": "function",
+        "z": "4ae513d322723fa7",
+        "name": "Check Night",
+        "func": "if (msg.payload === \"Occupied\") {\n    \n    return {topic:\"Night\" , payload: \"Night\" };\n}\nelse{ return{topic:\"Night\" ,payload: \"reset\"}}",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1470,
+        "y": 720,
+        "wires": [
+            [
+                "a27d191d2f5a158d"
+            ]
+        ]
+    },
+    {
+        "id": "469c0c55a712310d",
+        "type": "function",
+        "z": "4ae513d322723fa7",
+        "name": "Scenario Manager",
+        "func": "let scenario = msg.payload;\nlet config = {};\nlet alarm = \"None\";\n\nif (scenario === \"Night\") {config = { luce: \"off\", musica: \"off\"};  alarm = \"ARM_HOME\"}\nelse if (scenario === \"Study\") config = { luce: \"cold\", musica: \"off\" };\nelse if (scenario === \"Movie\") config = { luce: \"off\", musica: \"cinema-mode\" };\nelse if (scenario === \"Relax\") config = { luce: \"warm\", musica: \"on\" };\nelse if (scenario === \"No scenario\") { config = { luce: \"off\", musica: \"off\" }; alarm = \"DISARM\" }\nelse return null;\n\nglobal.set(\"activeScenario\", scenario);\nnode.status({ fill: \"green\", shape: \"dot\", text: `Scenarioso: ${scenario}` });\nreturn [ {payload: { scenario, config } },{ payload: alarm}];\n",
+        "outputs": 2,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2080,
+        "y": 480,
+        "wires": [
+            [
+                "c58f5ef6df5b9b30",
+                "30f318cd4a87a96a",
+                "175dbcd20bedf50e"
+            ],
+            [
+                "627ea2eece7dfd8d"
+            ]
+        ]
+    },
+    {
+        "id": "c58f5ef6df5b9b30",
+        "type": "ui_text",
+        "z": "4ae513d322723fa7",
+        "group": "78864000e2e9a37d",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "Scenarioso Attivo",
+        "label": "Active scenario",
+        "format": "{{msg.payload.scenario}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 2280,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "c84369ce134d6541",
+        "type": "function",
+        "z": "4ae513d322723fa7",
+        "name": "function 9",
+        "func": "msg.payload = msg.payload.status;\n\nif(msg.payload== \"off\") {msg.payload= false;}\nelse {msg.payload = true;}\n\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 140,
+        "wires": [
+            [
+                "cb965936799db8da"
+            ]
+        ]
+    },
+    {
+        "id": "c8a9b5185687d70b",
+        "type": "comment",
+        "z": "4ae513d322723fa7",
+        "name": "Scenarios: WORKING DO NOT MODIFY ANYTHING",
+        "info": "",
+        "x": 2170,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "07a5db61a079add6",
+        "type": "join",
+        "z": "4ae513d322723fa7",
+        "name": "Aggregate sensor states",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "useparts": false,
+        "accumulate": true,
+        "timeout": "",
+        "count": "3",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 1570,
+        "y": 900,
+        "wires": [
+            [
+                "f22297e3174cba0a"
+            ]
+        ]
+    },
+    {
+        "id": "f22297e3174cba0a",
+        "type": "function",
+        "z": "4ae513d322723fa7",
+        "name": "UserStatus",
+        "func": "const payload = msg.payload;\nlet divano = \"None\";\nif (payload.salotto || payload.studio || payload.camera) {\n    msg.payload = \"Sitting\";\n} else {\n    msg.payload = \"Standing\";\n}\n\nif(payload.salotto) divano = \"Sitting\";\nelse divano = \"Standing\";\n\nconst posizione_utente = { topic: \"user_position\", payload: divano }; \nreturn [msg,posizione_utente];",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1810,
+        "y": 900,
+        "wires": [
+            [
+                "f7bd41a1eaed4e1f"
+            ],
+            [
+                "42d2ea4018c44ef6"
+            ]
+        ]
+    },
+    {
+        "id": "f7bd41a1eaed4e1f",
+        "type": "ui_text",
+        "z": "4ae513d322723fa7",
+        "group": "dashboard_group",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Status",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1990,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "77f67729f4557cf9",
+        "type": "comment",
+        "z": "4ae513d322723fa7",
+        "name": "User sitting/standing on dashboard CORRECT",
+        "info": "",
+        "x": 1660,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "babcf17de08d15fc",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "",
+        "topic": "home/user1/wellness/band",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 1010,
+        "y": 1060,
+        "wires": [
+            [
+                "a003f3c47fbad2c5"
+            ]
+        ]
+    },
+    {
+        "id": "a003f3c47fbad2c5",
+        "type": "function",
+        "z": "4ae513d322723fa7",
+        "name": "function 10",
+        "func": "\nconst WINDOW_SIZE = 120;      \nconst EMA_ALPHA   = 0.25;      \nconst FALLBACK_LO = 20;        \nconst FALLBACK_HI = 80;        \n\n// ---- util ----\nfunction clamp(v, a, b){ return Math.max(a, Math.min(b, v)); }\n\nfunction calculateRMSSD(rr_intervals){\n    if (!Array.isArray(rr_intervals) || rr_intervals.length < 2) return null;\n    let sumSq = 0;\n    for (let i = 1; i < rr_intervals.length; i++){\n        const diff = rr_intervals[i] - rr_intervals[i-1];\n        sumSq += diff * diff;\n    }\n    return Math.sqrt(sumSq / (rr_intervals.length - 1));\n}\n\nfunction percentile(arr, p){\n    if (!arr.length) return null;\n    const a = [...arr].sort((x,y)=>x-y);\n    const idx = clamp(Math.round((p/100) * (a.length-1)), 0, a.length-1);\n    return a[idx];\n}\n\nfunction classifyStress(p){\n    if (p == null) return \"Unknown\";\n    if (p >= 70) return \"HIGH\";\n    if (p >= 40) return \"Normal\";\n    return \"Relaxed\";\n}\n\nconst hr = msg.payload?.hr;\nconst rr = msg.payload?.rr_intervals;\nconst rmssd = calculateRMSSD(rr);\n\nconst ctx = context.get('st') || { rmssdWin: [], ema: 50 };\n\nlet stressPercent = null;\n\nif (rmssd != null && isFinite(rmssd)){\n    ctx.rmssdWin.push(rmssd);\n    if (ctx.rmssdWin.length > WINDOW_SIZE) ctx.rmssdWin.shift();\n\n    const lo = percentile(ctx.rmssdWin, 20) ?? FALLBACK_LO;\n    const hi = percentile(ctx.rmssdWin, 80) ?? FALLBACK_HI;\n\n    const lo2 = Math.min(lo, hi-1e-6);\n\n    const norm = (rmssd - lo2) / (hi - lo2);\n    const inv  = 1 - clamp(norm, 0, 1);   // 0..1 (0=rilassato, 1=stressato)\n    const rawPercent = Math.round(inv * 100);\n\n    ctx.ema = ctx.ema + EMA_ALPHA * (rawPercent - ctx.ema);\n    stressPercent = Math.round(ctx.ema);\n}\n\nconst stressLevel = classifyStress(stressPercent);\n\nmsg.payload = {\n    hr,\n    rmssd,\n    stressPercent,            \n    stressLevel               \n};\n\nconst msgForRelax = { topic: \"stress\", payload: stressLevel };\n\ncontext.set('st', ctx);\n\nreturn [msg, msgForRelax];\n",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1220,
+        "y": 1060,
+        "wires": [
+            [
+                "5fa75b2b4ac53950",
+                "390d1ae2c81c2f8c",
+                "527597c3d0663f02"
+            ],
+            [
+                "e6f4a831f029e821"
+            ]
+        ]
+    },
+    {
+        "id": "dea03c8fd5e0de93",
+        "type": "ui_chart",
+        "z": "4ae513d322723fa7",
+        "name": "Stress level chart",
+        "group": "c19fc1c181c03ef6",
+        "order": 6,
+        "width": 16,
+        "height": 4,
+        "label": "Stress level chart",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "No data",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": "1",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1770,
+        "y": 1020,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5fa75b2b4ac53950",
+        "type": "ui_text",
+        "z": "4ae513d322723fa7",
+        "group": "dashboard_group",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Stress",
+        "format": "{{msg.payload.stressLevel}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1410,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "df3439ed136d20c0",
+        "type": "comment",
+        "z": "4ae513d322723fa7",
+        "name": "Optimized stress calculation",
+        "info": "",
+        "x": 1270,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "390d1ae2c81c2f8c",
+        "type": "ui_gauge",
+        "z": "4ae513d322723fa7",
+        "name": "",
+        "group": "c19fc1c181c03ef6",
+        "order": 2,
+        "width": 11,
+        "height": 2,
+        "gtype": "gage",
+        "title": "Actual Stress Level",
+        "label": "",
+        "format": "{{msg.payload.stressPercent}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1570,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "527597c3d0663f02",
+        "type": "function",
+        "z": "4ae513d322723fa7",
+        "name": "function 11",
+        "func": "msg.payload = msg.payload.stressPercent; \nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1580,
+        "y": 1020,
+        "wires": [
+            [
+                "dea03c8fd5e0de93"
+            ]
+        ]
+    },
+    {
+        "id": "6e7e7f83bb0a4f17",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "",
+        "topic": "home/user1/devices/tv",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 400,
+        "y": 120,
+        "wires": [
+            [
+                "c84369ce134d6541"
+            ]
+        ]
+    },
+    {
+        "id": "cb965936799db8da",
+        "type": "ui_switch",
+        "z": "4ae513d322723fa7",
+        "name": "",
+        "label": "Smart TV",
+        "tooltip": "",
+        "group": "6412d33ee5244df5",
+        "order": 5,
+        "width": 6,
+        "height": 1,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "payload",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 820,
+        "y": 140,
+        "wires": [
+            [
+                "4e893ad5d25a1574"
+            ]
+        ]
+    },
+    {
+        "id": "4e893ad5d25a1574",
+        "type": "function",
+        "z": "4ae513d322723fa7",
+        "name": "function 12",
+        "func": "msg = {topic: \"tv\", payload: msg.payload }\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 960,
+        "y": 200,
+        "wires": [
+            [
+                "58cf2af06dc07966"
+            ]
+        ]
+    },
+    {
+        "id": "58cf2af06dc07966",
+        "type": "join",
+        "z": "4ae513d322723fa7",
+        "name": "Join Movie conditions",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "",
+        "joinerType": "str",
+        "useparts": true,
+        "accumulate": false,
+        "timeout": "",
+        "count": "2",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 1100,
+        "y": 280,
+        "wires": [
+            [
+                "4c0da7d0b69bc92b"
+            ]
+        ]
+    },
+    {
+        "id": "4c0da7d0b69bc92b",
+        "type": "function",
+        "z": "4ae513d322723fa7",
+        "name": "Check Movie",
+        "func": "let p = msg.payload;\n\nif (p.pressure > 300 && p.tv === true) {\n    return { topic: \"Movie\", payload: \"Movie\" };\n}else{ return{ topic: \"Movie\", payload: \"reset\"}}",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1430,
+        "y": 320,
+        "wires": [
+            [
+                "a27d191d2f5a158d"
+            ]
+        ]
+    },
+    {
+        "id": "30f318cd4a87a96a",
+        "type": "switch",
+        "z": "4ae513d322723fa7",
+        "name": "msg per scenario",
+        "property": "payload.scenario",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "Movie",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "Relax",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "Night",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "Study",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 4,
+        "x": 2370,
+        "y": 580,
+        "wires": [
+            [
+                "2c1c55ace0dff8c7"
+            ],
+            [
+                "94c1a3b847707922"
+            ],
+            [
+                "375dc43ffe7734a0"
+            ],
+            [
+                "25ab1bf2b7e9f685"
+            ]
+        ]
+    },
+    {
+        "id": "2c1c55ace0dff8c7",
+        "type": "change",
+        "z": "4ae513d322723fa7",
+        "name": "Imposta Movie",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2610,
+        "y": 600,
+        "wires": [
+            [
+                "0fbd82772c38ec45"
+            ]
+        ]
+    },
+    {
+        "id": "94c1a3b847707922",
+        "type": "change",
+        "z": "4ae513d322723fa7",
+        "name": "Imposta Relax",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2620,
+        "y": 660,
+        "wires": [
+            [
+                "8f3d61b5f1e8db7f"
+            ]
+        ]
+    },
+    {
+        "id": "a27d191d2f5a158d",
+        "type": "function",
+        "z": "4ae513d322723fa7",
+        "name": "function 2",
+        "func": "\nconst SCENARI = [\"Night\",\"Study\",\"Movie\",\"Relax\"];\nconst K = \"activeScenario\";\n\nlet current = flow.get(K) || null;\nconst t = msg.topic || null;\nconst p = (\"\" + (msg.payload ?? \"\")).trim();\nconst isScenarioso = s => SCENARI.includes(s);\n\nif (isScenarioso(p)) {\n  current = p;\n}\nelse if (p.toLowerCase() === \"reset\") {\n  if (t && isScenarioso(t)) {\n    if (current === t) current = null;\n    else return null;\n  } else {\n    current = null;\n  }\n}\n\nflow.set(K, current);\nreturn { payload: current || \"No scenario\" };\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1880,
+        "y": 480,
+        "wires": [
+            [
+                "469c0c55a712310d"
+            ]
+        ]
+    },
+    {
+        "id": "6944c9a3475aaeea",
+        "type": "function",
+        "z": "4ae513d322723fa7",
+        "name": "Check stress",
+        "func": "const pos = msg.payload.user_position;  // true = standing, false = sitting\nconst stress = msg.payload.stress;         \nconst current = flow.get(\"activeScenario\") || null;\n\nconst condRelax = (pos === false) && (stress === \"HIGH\");\n\nif (condRelax) {\n  return { topic: \"Relax\", payload: \"Relax\" }; \n}\n\nif (current === \"Relax\") {\n  return { topic: \"Relax\", payload: \"reset\" };\n}\n\nreturn null; \n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2430,
+        "y": 1060,
+        "wires": [
+            [
+                "a27d191d2f5a158d"
+            ]
+        ]
+    },
+    {
+        "id": "42d2ea4018c44ef6",
+        "type": "function",
+        "z": "4ae513d322723fa7",
+        "name": "function 15",
+        "func": "const p = msg.payload;\nlet posizione_utente = { topic: \"user_position\", payload: true};\nif (p === \"Sitting\")\n    posizione_utente.payload = false;\n\nreturn posizione_utente;\n    \n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1990,
+        "y": 980,
+        "wires": [
+            [
+                "e6f4a831f029e821"
+            ]
+        ]
+    },
+    {
+        "id": "e6f4a831f029e821",
+        "type": "join",
+        "z": "4ae513d322723fa7",
+        "name": "JoinPerRelax",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "useparts": false,
+        "accumulate": true,
+        "timeout": "",
+        "count": "2",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 2040,
+        "y": 1060,
+        "wires": [
+            [
+                "6944c9a3475aaeea"
+            ]
+        ]
+    },
+    {
+        "id": "375dc43ffe7734a0",
+        "type": "change",
+        "z": "4ae513d322723fa7",
+        "name": "Imposta Night",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2620,
+        "y": 720,
+        "wires": [
+            [
+                "b33f2bd7491d72cb"
+            ]
+        ]
+    },
+    {
+        "id": "25ab1bf2b7e9f685",
+        "type": "change",
+        "z": "4ae513d322723fa7",
+        "name": "Imposta Study",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2620,
+        "y": 780,
+        "wires": [
+            [
+                "6356767d2b948111"
+            ]
+        ]
+    },
+    {
+        "id": "7bd2135f4cd07fb1",
+        "type": "comment",
+        "z": "4ae513d322723fa7",
+        "name": "Human presence sensor",
+        "info": "",
+        "x": 190,
+        "y": 1760,
+        "wires": []
+    },
+    {
+        "id": "2d65aa77ea8a2219",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "",
+        "topic": "home/user1/sensors/pir/living-room",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 240,
+        "y": 1820,
+        "wires": [
+            [
+                "7312d86df740d9ac",
+                "952560c390a54be3"
+            ]
+        ]
+    },
+    {
+        "id": "2a48d6710fca56d9",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "",
+        "topic": "home/user1/sensors/pir/kitchen",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 230,
+        "y": 1880,
+        "wires": [
+            [
+                "5efca04748dacb1b",
+                "2b086795b2825e87"
+            ]
+        ]
+    },
+    {
+        "id": "c8ad576589f2c101",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "",
+        "topic": "home/user1/sensors/pir/bath-room",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 240,
+        "y": 1940,
+        "wires": [
+            [
+                "ecd24c31e5acdfd7",
+                "4ebef3bf2cc19f72"
+            ]
+        ]
+    },
+    {
+        "id": "7a9db45855825bd1",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "",
+        "topic": "home/user1/sensors/pir/bedroom",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 230,
+        "y": 2020,
+        "wires": [
+            [
+                "eb115011041fa78b",
+                "d17a64e5663dce04"
+            ]
+        ]
+    },
+    {
+        "id": "cd246bcb3693fce6",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "",
+        "topic": "home/user1/sensors/pir/studio",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 230,
+        "y": 2080,
+        "wires": [
+            [
+                "ad076c53996334ee",
+                "6b1e6aad1076a089"
+            ]
+        ]
+    },
+    {
+        "id": "0fbd82772c38ec45",
+        "type": "mqtt out",
+        "z": "4ae513d322723fa7",
+        "name": "",
+        "topic": "home/user1/actuators/light/living-room",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "broker_localhost",
+        "x": 2920,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "8f3d61b5f1e8db7f",
+        "type": "mqtt out",
+        "z": "4ae513d322723fa7",
+        "name": "",
+        "topic": "home/user1/actuators/light/living-room",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "broker_localhost",
+        "x": 2920,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "b33f2bd7491d72cb",
+        "type": "mqtt out",
+        "z": "4ae513d322723fa7",
+        "name": "",
+        "topic": "home/user1/actuators/light/bedroom",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "broker_localhost",
+        "x": 2910,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "6356767d2b948111",
+        "type": "mqtt out",
+        "z": "4ae513d322723fa7",
+        "name": "",
+        "topic": "home/user1/actuators/light/studio",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "broker_localhost",
+        "x": 2880,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "794a377417b292d0",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "",
+        "topic": "home/user1/actuators/light/studio",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 3420,
+        "y": 580,
+        "wires": [
+            [
+                "56beda051c1ab87c"
+            ]
+        ]
+    },
+    {
+        "id": "fa94f608192440be",
+        "type": "ui_text",
+        "z": "4ae513d322723fa7",
+        "group": "399f7fa3eb5f5073",
+        "order": 6,
+        "width": 6,
+        "height": 1,
+        "name": "",
+        "label": "Studio light",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 3890,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "a23b3a2603ba5c69",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "",
+        "topic": "home/user1/actuators/light/living-room",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 3430,
+        "y": 660,
+        "wires": [
+            [
+                "de928d06cea21df4"
+            ]
+        ]
+    },
+    {
+        "id": "a0ccfb1c9cf9cc78",
+        "type": "ui_text",
+        "z": "4ae513d322723fa7",
+        "group": "6412d33ee5244df5",
+        "order": 6,
+        "width": 6,
+        "height": 1,
+        "name": "",
+        "label": "Living room light",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 3890,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "3ae93c5ddc35f5a9",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "",
+        "topic": "home/user1/actuators/light/bedroom",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 3430,
+        "y": 720,
+        "wires": [
+            [
+                "65a7ad96ae2f2d5e"
+            ]
+        ]
+    },
+    {
+        "id": "77bc39ac72a52f4b",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "",
+        "topic": "home/user1/actuators/light/bathroom",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 3430,
+        "y": 760,
+        "wires": [
+            [
+                "935dc937265cb3f4"
+            ]
+        ]
+    },
+    {
+        "id": "361b2c380d1a8ccc",
+        "type": "ui_text",
+        "z": "4ae513d322723fa7",
+        "group": "6376ecc6f540863b",
+        "order": 6,
+        "width": 5,
+        "height": 1,
+        "name": "",
+        "label": "Kitchen light",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 3890,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "3b334bfa606b6412",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "",
+        "topic": "home/user1/actuators/light/kitchen",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 3420,
+        "y": 820,
+        "wires": [
+            [
+                "06950e58ea653f00"
+            ]
+        ]
+    },
+    {
+        "id": "8f8b8ae16410e93b",
+        "type": "ui_text",
+        "z": "4ae513d322723fa7",
+        "group": "631a21d3c8abf6c0",
+        "order": 5,
+        "width": 6,
+        "height": 1,
+        "name": "",
+        "label": "Bathroom light",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 3900,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "7312d86df740d9ac",
+        "type": "mqtt out",
+        "z": "4ae513d322723fa7",
+        "name": "",
+        "topic": "home/user1/actuators/light/living-room",
+        "qos": "2",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "broker_localhost",
+        "x": 680,
+        "y": 1760,
+        "wires": []
+    },
+    {
+        "id": "eb115011041fa78b",
+        "type": "mqtt out",
+        "z": "4ae513d322723fa7",
+        "name": "",
+        "topic": "home/user1/actuators/light/bedroom",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "broker_localhost",
+        "x": 610,
+        "y": 2020,
+        "wires": []
+    },
+    {
+        "id": "ad076c53996334ee",
+        "type": "mqtt out",
+        "z": "4ae513d322723fa7",
+        "name": "",
+        "topic": "home/user1/actuators/light/studio",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "broker_localhost",
+        "x": 600,
+        "y": 2100,
+        "wires": []
+    },
+    {
+        "id": "5efca04748dacb1b",
+        "type": "mqtt out",
+        "z": "4ae513d322723fa7",
+        "name": "",
+        "topic": "home/user1/actuators/light/kitchen",
+        "qos": "2",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "broker_localhost",
+        "x": 680,
+        "y": 1860,
+        "wires": []
+    },
+    {
+        "id": "ecd24c31e5acdfd7",
+        "type": "mqtt out",
+        "z": "4ae513d322723fa7",
+        "name": "",
+        "topic": "home/user1/actuators/light/bathroom",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "broker_localhost",
+        "x": 730,
+        "y": 1940,
+        "wires": []
+    },
+    {
+        "id": "0b30ce2836ac48fc",
+        "type": "ui_text",
+        "z": "4ae513d322723fa7",
+        "group": "015361052332870d",
+        "order": 6,
+        "width": 6,
+        "height": 1,
+        "name": "",
+        "label": "Bedroom light",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 3900,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "56beda051c1ab87c",
+        "type": "function",
+        "z": "4ae513d322723fa7",
+        "name": "function 1",
+        "func": "let scenario = global.get(\"activeScenario\") || \"off\";\n\nlet payload = msg.payload;\nif (typeof payload === \"string\") {\n    try { payload = JSON.parse(payload); } catch(e) {}\n}\n\nlet luce = \"off\";\n\nif (payload && payload.config && payload.config.luce) {\n    luce = payload.config.luce;\n    scenario = payload.scenario || \"on\";\n    global.set(\"activeScenario\", scenario);\n}\n\nelse if (payload && typeof payload.motion !== \"undefined\") {\n    if (scenario === \"off\" || scenario === \"No scenario\") {\n        if (payload.motion) {\n            luce = \"cold\";\n        } else {\n            luce = \"off\";\n        }\n    } else {\n        luce = null;\n    }\n}\n\nif (luce === null) return null;\n\nreturn { payload: luce };\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3680,
+        "y": 580,
+        "wires": [
+            [
+                "fa94f608192440be"
+            ]
+        ]
+    },
+    {
+        "id": "de928d06cea21df4",
+        "type": "function",
+        "z": "4ae513d322723fa7",
+        "name": "function 3",
+        "func": "let scenario = global.get(\"activeScenario\") || \"off\";\n\nlet payload = msg.payload;\nif (typeof payload === \"string\") {\n    try { payload = JSON.parse(payload); } catch(e) {}\n}\n\nlet luce = \"off\";\n\nif (payload && payload.config && payload.config.luce) {\n    luce = payload.config.luce;\n    scenario = payload.scenario || \"on\";\n    global.set(\"activeScenario\", scenario);\n}\n\nelse if (payload && typeof payload.motion !== \"undefined\") {\n    if (scenario === \"off\" || scenario === \"No scenario\") {\n        if (payload.motion) {\n            luce = \"cold\";\n        } else {\n            luce = \"off\";\n        }\n    } else {\n        luce = null;\n    }\n}\n\nif (luce === null) return null;\n\nreturn { payload: luce };\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3680,
+        "y": 660,
+        "wires": [
+            [
+                "a0ccfb1c9cf9cc78"
+            ]
+        ]
+    },
+    {
+        "id": "65a7ad96ae2f2d5e",
+        "type": "function",
+        "z": "4ae513d322723fa7",
+        "name": "function 4",
+        "func": "let scenario = global.get(\"activeScenario\") || \"off\";\n\nlet payload = msg.payload;\nif (typeof payload === \"string\") {\n    try { payload = JSON.parse(payload); } catch(e) {}\n}\n\nlet luce = \"off\";\n\nif (payload && payload.config && payload.config.luce) {\n    luce = payload.config.luce;\n    scenario = payload.scenario || \"on\";\n    global.set(\"activeScenario\", scenario);\n}\n\nelse if (payload && typeof payload.motion !== \"undefined\") {\n    if (scenario === \"off\" || scenario === \"No scenario\") {\n        if (payload.motion) {\n            luce = \"cold\";\n        } else {\n            luce = \"off\";\n        }\n    } else {\n        luce = null;\n    }\n}\n\nif (luce === null) return null;\n\nreturn { payload: luce };\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3680,
+        "y": 720,
+        "wires": [
+            [
+                "0b30ce2836ac48fc"
+            ]
+        ]
+    },
+    {
+        "id": "935dc937265cb3f4",
+        "type": "function",
+        "z": "4ae513d322723fa7",
+        "name": "function 5",
+        "func": "let scenario = global.get(\"activeScenario\") || \"off\";\n\nlet payload = msg.payload;\nif (typeof payload === \"string\") {\n    try { payload = JSON.parse(payload); } catch(e) {}\n}\n\nlet luce = \"off\";\n\nif (payload && payload.config && payload.config.luce) {\n    luce = payload.config.luce;\n    scenario = payload.scenario || \"on\";\n    global.set(\"activeScenario\", scenario);\n}\n\nelse if (payload && typeof payload.motion !== \"undefined\") {\n    if (scenario === \"off\" || scenario === \"No scenario\") {\n        if (payload.motion) {\n            luce = \"cold\";\n        } else {\n            luce = \"off\";\n        }\n    } else {\n        luce = null;\n    }\n}\n\nif (luce === null) return null;\n\nreturn { payload: luce };\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3680,
+        "y": 760,
+        "wires": [
+            [
+                "8f8b8ae16410e93b"
+            ]
+        ]
+    },
+    {
+        "id": "06950e58ea653f00",
+        "type": "function",
+        "z": "4ae513d322723fa7",
+        "name": "function 13",
+        "func": "let scenario = global.get(\"activeScenario\") || \"off\";\n\nlet payload = msg.payload;\nif (typeof payload === \"string\") {\n    try { payload = JSON.parse(payload); } catch(e) {}\n}\n\nlet luce = \"off\";\n\nif (payload && payload.config && payload.config.luce) {\n    luce = payload.config.luce;\n    scenario = payload.scenario || \"on\";\n    global.set(\"activeScenario\", scenario);\n}\n\nelse if (payload && typeof payload.motion !== \"undefined\") {\n    if (scenario === \"off\" || scenario === \"No scenario\") {\n        if (payload.motion) {\n            luce = \"cold\";\n        } else {\n            luce = \"off\";\n        }\n    } else {\n        luce = null;\n    }\n}\n\nif (luce === null) return null;\n\nreturn { payload: luce };\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3690,
+        "y": 820,
+        "wires": [
+            [
+                "361b2c380d1a8ccc"
+            ]
+        ]
+    },
+    {
+        "id": "952560c390a54be3",
+        "type": "function",
+        "z": "4ae513d322723fa7",
+        "name": "function 16",
+        "func": "if(msg.payload.motion === true) return {topic:\"living-room\", payload: true};\nelse return  {topic:\"living-room\", payload: false} ;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 1820,
+        "wires": [
+            [
+                "5b344a7b05270bf6"
+            ]
+        ]
+    },
+    {
+        "id": "8069a7a5d0c20b2a",
+        "type": "ui_text",
+        "z": "4ae513d322723fa7",
+        "group": "78864000e2e9a37d",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Room occupancy",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1330,
+        "y": 1820,
+        "wires": []
+    },
+    {
+        "id": "2b086795b2825e87",
+        "type": "function",
+        "z": "4ae513d322723fa7",
+        "name": "function 17",
+        "func": "if(msg.payload.motion === true) return {topic:\"kitchen\", payload:true};\nelse return {topic:\"kitchen\", payload:false};",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 1900,
+        "wires": [
+            [
+                "5b344a7b05270bf6"
+            ]
+        ]
+    },
+    {
+        "id": "4ebef3bf2cc19f72",
+        "type": "function",
+        "z": "4ae513d322723fa7",
+        "name": "function 18",
+        "func": "if(msg.payload.motion === true) return {topic:\"bathroom\", payload: true};\nelse return  {topic:\"bathroom\", payload: false};",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 1980,
+        "wires": [
+            [
+                "5b344a7b05270bf6"
+            ]
+        ]
+    },
+    {
+        "id": "d17a64e5663dce04",
+        "type": "function",
+        "z": "4ae513d322723fa7",
+        "name": "function 19",
+        "func": "if(msg.payload.motion === true) return {topic:\"bedroom\", payload: true};\nelse return {topic:\"bedroom\", payload: false};",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 2060,
+        "wires": [
+            [
+                "5b344a7b05270bf6"
+            ]
+        ]
+    },
+    {
+        "id": "6b1e6aad1076a089",
+        "type": "function",
+        "z": "4ae513d322723fa7",
+        "name": "function 20",
+        "func": "if(msg.payload.motion === true) return {topic:\"studio\", payload: true};\nelse return  {topic:\"studio\", payload: false};",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 2160,
+        "wires": [
+            [
+                "5b344a7b05270bf6"
+            ]
+        ]
+    },
+    {
+        "id": "5b344a7b05270bf6",
+        "type": "function",
+        "z": "4ae513d322723fa7",
+        "name": "function 21",
+        "func": "\nconst NAMES = {\n  \"living-room\": \"Living-room\",\n  \"kitchen\":     \"Kitchen\",\n  \"bathroom\":    \"Bathroom\",\n  \"bedroom\":     \"Bedroom\",\n  \"studio\":      \"Study\"\n};\n\nconst PIR_BASE = \"home/user1/sensors/pir/\"; \nconst ERROR_MS = 5000;                      \nlet occ        = context.get('occ') || { \"living-room\":false, \"kitchen\":false, \"bathroom\":false, \"bedroom\":false, \"studio\":false };\nlet current    = context.get('current') || null;\nlet errorTimer = context.get('errorTimer') || null;\n\nconst room   = String(msg.topic || \"\");\nconst pretty = NAMES[room] || room;\nconst motion = !!msg.payload;\n\nlet outText  = null; \nlet outToast = null;\nlet outReset = null; \n\nif (errorTimer) { clearTimeout(errorTimer); errorTimer = null; context.set('errorTimer', null); }\n\nif (motion) {\n  if (current && current !== room) {\n    outToast = { payload: `You can't be in two rooms: already in \"${NAMES[current]}\", also noted \"${pretty}\"` };\n    outText  = { payload: \"error\" };\n\n    outReset = {\n      topic: PIR_BASE + room,\n      payload: { motion: false, reason: \"double-presence\" }\n    };\n\n    errorTimer = setTimeout(() => {\n      node.send([{ payload: \"None\" }, null, null]);\n      node.status({ fill: \"grey\", shape: \"ring\", text: \"Auto reset → None\" });\n      context.set('errorTimer', null);\n    }, ERROR_MS);\n    context.set('errorTimer', errorTimer);\n\n    node.status({ fill:\"red\", shape:\"dot\", text:`Error: ${pretty} vs ${NAMES[current]}` });\n  } else {\n    Object.keys(occ).forEach(r => occ[r] = false);\n    occ[room] = true;\n    current   = room;\n    outText   = { payload: pretty };\n    node.status({ fill:\"green\", shape:\"dot\", text:`Current: ${pretty}` });\n  }\n} else {\n  occ[room] = false;\n  if (current === room) current = null;\n\n  const stillOn = Object.keys(occ).find(r => occ[r]);\n  if (stillOn) {\n    current = stillOn;\n    outText = { payload: NAMES[stillOn] };\n    node.status({ fill:\"blue\", shape:\"dot\", text:`Current: ${NAMES[stillOn]}` });\n  } else {\n    current = null;\n    outText = { payload: \"None\" };\n    node.status({ fill:\"blue\", shape:\"ring\", text:`No room` });\n  }\n}\n\ncontext.set('occ', occ);\ncontext.set('current', current);\n\nreturn [outText, outToast, outReset];\n",
+        "outputs": 3,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1100,
+        "y": 1860,
+        "wires": [
+            [
+                "8069a7a5d0c20b2a"
+            ],
+            [
+                "29a0f66d059f75d9"
+            ],
+            [
+                "96fd6a80970174e3"
+            ]
+        ]
+    },
+    {
+        "id": "29a0f66d059f75d9",
+        "type": "ui_toast",
+        "z": "4ae513d322723fa7",
+        "position": "dialog",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 1,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "Non puoi essere in due stanze contemporaneamente",
+        "name": "",
+        "x": 1330,
+        "y": 1860,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "96fd6a80970174e3",
+        "type": "mqtt out",
+        "z": "4ae513d322723fa7",
+        "name": "",
+        "topic": "",
+        "qos": "2",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "broker_localhost",
+        "x": 1310,
+        "y": 1920,
+        "wires": []
+    },
+    {
+        "id": "54ed2f4a560c7086",
+        "type": "comment",
+        "z": "4ae513d322723fa7",
+        "name": "Music",
+        "info": "",
+        "x": 170,
+        "y": 2200,
+        "wires": []
+    },
+    {
+        "id": "1cf569e8085d5468",
+        "type": "comment",
+        "z": "4ae513d322723fa7",
+        "name": "Smart Lights",
+        "info": "",
+        "x": 3410,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "753a592e3c178520",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "living/cmd/power",
+        "topic": "home/devices/speakers/living/cmd/power",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 200,
+        "y": 2300,
+        "wires": [
+            [
+                "f27fbd9e214287c0"
+            ]
+        ]
+    },
+    {
+        "id": "f27fbd9e214287c0",
+        "type": "ui_text",
+        "z": "4ae513d322723fa7",
+        "group": "6412d33ee5244df5",
+        "order": 2,
+        "width": 2,
+        "height": 1,
+        "name": "",
+        "label": "Power",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 450,
+        "y": 2300,
+        "wires": []
+    },
+    {
+        "id": "87766704cad3edbf",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "living/cmd/mode",
+        "topic": "home/devices/speakers/living/cmd/mode",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 200,
+        "y": 2340,
+        "wires": [
+            [
+                "2af38d7f4dbf8ff0"
+            ]
+        ]
+    },
+    {
+        "id": "2af38d7f4dbf8ff0",
+        "type": "ui_text",
+        "z": "4ae513d322723fa7",
+        "group": "6412d33ee5244df5",
+        "order": 3,
+        "width": 3,
+        "height": 1,
+        "name": "",
+        "label": "Mode",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 450,
+        "y": 2340,
+        "wires": []
+    },
+    {
+        "id": "71a22396f1ecba93",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "bedroom/cmd/power",
+        "topic": "home/devices/speakers/bedroom/cmd/power",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 220,
+        "y": 2400,
+        "wires": [
+            [
+                "e48c2f9f637849a9"
+            ]
+        ]
+    },
+    {
+        "id": "e48c2f9f637849a9",
+        "type": "ui_text",
+        "z": "4ae513d322723fa7",
+        "group": "015361052332870d",
+        "order": 3,
+        "width": 2,
+        "height": 1,
+        "name": "",
+        "label": "Power",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 450,
+        "y": 2400,
+        "wires": []
+    },
+    {
+        "id": "42aa9a1bdad9b7b1",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "bedroom/cmd/mode",
+        "topic": "home/devices/speakers/bedroom/cmd/mode",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 210,
+        "y": 2440,
+        "wires": [
+            [
+                "04280dac91016ac1"
+            ]
+        ]
+    },
+    {
+        "id": "04280dac91016ac1",
+        "type": "ui_text",
+        "z": "4ae513d322723fa7",
+        "group": "015361052332870d",
+        "order": 4,
+        "width": 3,
+        "height": 1,
+        "name": "",
+        "label": "Mode",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 450,
+        "y": 2440,
+        "wires": []
+    },
+    {
+        "id": "cdbd290edd9176dc",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "studio/cmd/power",
+        "topic": "home/devices/speakers/studio/cmd/power",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 210,
+        "y": 2500,
+        "wires": [
+            [
+                "cd93c6f994b48295"
+            ]
+        ]
+    },
+    {
+        "id": "cd93c6f994b48295",
+        "type": "ui_text",
+        "z": "4ae513d322723fa7",
+        "group": "399f7fa3eb5f5073",
+        "order": 3,
+        "width": 2,
+        "height": 1,
+        "name": "",
+        "label": "Power",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 450,
+        "y": 2500,
+        "wires": []
+    },
+    {
+        "id": "9412b7e95f7d53b3",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "studio/cmd/mode",
+        "topic": "home/devices/speakers/studio/cmd/mode",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 210,
+        "y": 2540,
+        "wires": [
+            [
+                "60f00396f04a7754"
+            ]
+        ]
+    },
+    {
+        "id": "60f00396f04a7754",
+        "type": "ui_text",
+        "z": "4ae513d322723fa7",
+        "group": "399f7fa3eb5f5073",
+        "order": 4,
+        "width": 3,
+        "height": 1,
+        "name": "",
+        "label": "Mode",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 450,
+        "y": 2540,
+        "wires": []
+    },
+    {
+        "id": "9f1495f66a32e4b0",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "kitchen/cmd/power",
+        "topic": "home/devices/speakers/kitchen/cmd/power",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 210,
+        "y": 2600,
+        "wires": [
+            [
+                "7fa93139e597b59a"
+            ]
+        ]
+    },
+    {
+        "id": "7fa93139e597b59a",
+        "type": "ui_text",
+        "z": "4ae513d322723fa7",
+        "group": "6376ecc6f540863b",
+        "order": 3,
+        "width": 2,
+        "height": 1,
+        "name": "",
+        "label": "Power",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 450,
+        "y": 2600,
+        "wires": []
+    },
+    {
+        "id": "13b48899561c9967",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "kitchen/cmd/mode",
+        "topic": "home/devices/speakers/kitchen/cmd/mode",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 210,
+        "y": 2640,
+        "wires": [
+            [
+                "81e8f6bb225fbe60"
+            ]
+        ]
+    },
+    {
+        "id": "81e8f6bb225fbe60",
+        "type": "ui_text",
+        "z": "4ae513d322723fa7",
+        "group": "6376ecc6f540863b",
+        "order": 4,
+        "width": 3,
+        "height": 1,
+        "name": "",
+        "label": "Mode",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 450,
+        "y": 2640,
+        "wires": []
+    },
+    {
+        "id": "eedd8af70512c188",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "bath/cmd/power",
+        "topic": "home/devices/speakers/bath/cmd/power",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 200,
+        "y": 2700,
+        "wires": [
+            [
+                "421a3aeb46c9adbd"
+            ]
+        ]
+    },
+    {
+        "id": "421a3aeb46c9adbd",
+        "type": "ui_text",
+        "z": "4ae513d322723fa7",
+        "group": "631a21d3c8abf6c0",
+        "order": 2,
+        "width": 2,
+        "height": 1,
+        "name": "",
+        "label": "Power",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 450,
+        "y": 2700,
+        "wires": []
+    },
+    {
+        "id": "af9c5d1d9b50a6c0",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "bath/cmd/mode",
+        "topic": "home/devices/speakers/bath/cmd/mode",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 200,
+        "y": 2740,
+        "wires": [
+            [
+                "fd42539e5d71135f"
+            ]
+        ]
+    },
+    {
+        "id": "fd42539e5d71135f",
+        "type": "ui_text",
+        "z": "4ae513d322723fa7",
+        "group": "631a21d3c8abf6c0",
+        "order": 3,
+        "width": 3,
+        "height": 1,
+        "name": "",
+        "label": "Mode",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 450,
+        "y": 2740,
+        "wires": []
+    },
+    {
+        "id": "175dbcd20bedf50e",
+        "type": "function",
+        "z": "4ae513d322723fa7",
+        "name": "Audio Policy",
+        "func": "const p = msg.payload || {};\nconst scenario = p.scenario || \"Nessuno\";\nconst musica   = p.config?.musica || \"off\";\n\nconst room = flow.get(\"roomCorrente\") || \"living\";\n\nconst VOL = { off:0, low:25, mid:45, high:65 };\n\nfunction zone(z, on, vol, mode) {\n  return [\n    { topic:`home/devices/speakers/${z}/cmd/power`,  payload: on ? \"on\" : \"off\" },\n    { topic:`home/devices/speakers/${z}/cmd/volume`, payload: on ? vol : 0 },\n    { topic:`home/devices/speakers/${z}/cmd/mode`,   payload: mode }\n  ];\n}\n\nlet cmds = []\n  .concat(zone(\"living\",  false, 0, \"normal\"))\n  .concat(zone(\"studio\",  false, 0, \"normal\"))\n  .concat(zone(\"bedroom\", false, 0, \"normal\"))\n  .concat(zone(\"kitchen\", false, 0, \"normal\"))\n  .concat(zone(\"bath\",false, 0, \"normal\"));\n\nswitch (scenario) {\n  case \"Night\":\n    break;\n\n  case \"Study\":\n    cmds = cmds.concat(zone(\"studio\", true, VOL.low, \"focus\"));\n    break;\n\n  case \"Movie\":\n    cmds = cmds.concat(zone(\"living\", true, VOL.high, \"cinema\"));\n    break;\n\n  case \"Relax\":\n    cmds = cmds.concat(zone(room, true, VOL.mid, \"relaxing\"));\n    break;\n\n  case \"No scenario\":\n  default:\n    if (musica !== \"off\") {\n      cmds = cmds.concat(zone(room, true, VOL.low, \"normal\"));\n    }\n    break;\n}\n\nconst out = [];\nconst seen = new Set();\nfor (const c of cmds) {\n  if (!seen.has(c.topic + \"|\" + c.payload)) {\n    seen.add(c.topic + \"|\" + c.payload);\n    out.push({topic:c.topic, payload:c.payload});\n  }\n}\n\nreturn [ { payload: out } ];\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2400,
+        "y": 500,
+        "wires": [
+            [
+                "9dfb69a96e7e4932"
+            ]
+        ]
+    },
+    {
+        "id": "9dfb69a96e7e4932",
+        "type": "split",
+        "z": "4ae513d322723fa7",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "property": "payload",
+        "x": 2590,
+        "y": 500,
+        "wires": [
+            [
+                "b244958f8bf4c9e0"
+            ]
+        ]
+    },
+    {
+        "id": "b244958f8bf4c9e0",
+        "type": "change",
+        "z": "4ae513d322723fa7",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "payload.topic",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2770,
+        "y": 500,
+        "wires": [
+            [
+                "2f819dbc07af34ba"
+            ]
+        ]
+    },
+    {
+        "id": "2f819dbc07af34ba",
+        "type": "mqtt out",
+        "z": "4ae513d322723fa7",
+        "name": "",
+        "topic": "",
+        "qos": "2",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "broker_localhost",
+        "x": 2940,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "fa2450b56e72a05a",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "home/security/cmd",
+        "topic": "home/security/cmd",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 230,
+        "y": 2900,
+        "wires": [
+            [
+                "1e7ca9027ad96230"
+            ]
+        ]
+    },
+    {
+        "id": "3575eb275b71ba23",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "home/sensors/windows/#",
+        "topic": "home/sensors/windows/#",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 170,
+        "y": 2960,
+        "wires": [
+            [
+                "1e7ca9027ad96230"
+            ]
+        ]
+    },
+    {
+        "id": "01d00536e94f342c",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "home/user1/sensors/door/living-room",
+        "topic": "home/user1/sensors/door/living-room",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 190,
+        "y": 3060,
+        "wires": [
+            [
+                "1e7ca9027ad96230"
+            ]
+        ]
+    },
+    {
+        "id": "975167d13f66f3cc",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "home/entry/identity",
+        "topic": "home/entry/identity",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 170,
+        "y": 3120,
+        "wires": [
+            [
+                "1e7ca9027ad96230",
+                "2ddeb516da6ff19e"
+            ]
+        ]
+    },
+    {
+        "id": "1e7ca9027ad96230",
+        "type": "function",
+        "z": "4ae513d322723fa7",
+        "name": "SECURITY",
+        "func": "\nconst ENTRY_WINDOW_MS = Number(flow.get('ENTRY_WINDOW_MS') ?? 30000);\nconst USERS_OK = new Set(['user1','guest']);\n\nconst TOPIC_CMD   = 'home/security/cmd';\nconst TOPIC_STATE = 'home/security/state';\nconst TOPIC_ID    = 'home/entry/identity';\n\nconst DOOR_LIVING = 'home/user1/sensors/door/living-room';\nconst WINDOWS_RE  = /\\/sensors\\/window(s)?\\//;\n\nlet entryTimer = context.get('entryTimer') || null;\n\nfunction publishState(s) {\n  flow.set('securityState', s);\n  node.status({\n    fill: (s === 'ALARM' ? 'red' : s === 'ENTRY_DELAY' ? 'yellow' : 'green'),\n    shape: 'dot', text: s\n  });\n  return { topic: TOPIC_STATE, payload: s, retain: true };\n}\nfunction clearEntryTimer() {\n  if (entryTimer) { clearTimeout(entryTimer); entryTimer = null; context.set('entryTimer', null); }\n}\nfunction clearIdentityFlowAndMqtt() {\n  flow.set('lastIdentity', '');\n  return { topic: TOPIC_ID, payload: \"\" };\n}\nfunction beginEntryDelay(triggerInfo) {\n  flow.set('lastIdentity', '');\n\n  const outState      = publishState('ENTRY_DELAY');               // OUT0\n  const outEntryPopup = { payload: 'ENTRY_DELAY', info: triggerInfo }; // OUT1\n  const outLight      = { payload: 'cold' };                     // OUT2\n  const outClrId      = clearIdentityFlowAndMqtt();                // OUT3\n\n  clearEntryTimer();\n  entryTimer = setTimeout(() => {\n    const sNow = String(flow.get('securityState') || '').toUpperCase();\n    if (sNow !== 'DISARMED') {\n      const m = publishState('ALARM');\n      node.send([m, { payload: 'ALARM', info: 'timeout' }, null, null]);\n    }\n    context.set('entryTimer', null);\n  }, ENTRY_WINDOW_MS);\n  context.set('entryTimer', entryTimer);\n\n  return [outState, outEntryPopup, outLight, outClrId];\n}\nfunction raiseAlarmNow(info) {\n  clearEntryTimer();\n  const m = publishState('ALARM');          \n  const popup = { payload: 'ALARM', info }; \n  return [m, popup, null, null];\n}\n\nif (!context.get('__init')) {\n  node.on('close', function() { clearEntryTimer(); });\n  context.set('__init', true);\n}\n\nlet topic = msg.topic || '';\nlet p = msg.payload;\nif (typeof p === 'string') { try { p = JSON.parse(p); } catch(_) {} }\n\nif (topic === TOPIC_CMD) {\n  const cmd = String(msg.payload || '').toUpperCase();\n\n  if (cmd === 'DISARM') {\n    clearEntryTimer();\n    const m = publishState('DISARMED');\n    const clr = clearIdentityFlowAndMqtt();\n    return [m, null, null, clr];\n  }\n  if (cmd === 'ARM_HOME' || cmd === 'ARM_AWAY') {\n    clearEntryTimer();\n    const newState = (cmd === 'ARM_HOME') ? 'ARMED_HOME' : 'ARMED_AWAY';\n    const m = publishState(newState);\n    const clr = clearIdentityFlowAndMqtt();\n    return [m, null, null, clr];\n  }\n  return null;\n}\n\nif (topic === TOPIC_ID) {\n  const who = String(msg.payload || '').toLowerCase();\n  flow.set('lastIdentity', who);\n\n  const state = String(flow.get('securityState') || 'DISARMED').toUpperCase();\n  if (state === 'ENTRY_DELAY' && USERS_OK.has(who)) {\n    clearEntryTimer();\n    const m = publishState('DISARMED');\n    const clr = clearIdentityFlowAndMqtt();\n    return [m, null, null, clr];\n  }\n  return null;\n}\n\nconst stateNow = String(flow.get('securityState') || 'DISARMED').toUpperCase();\nconst isArmed = (stateNow === 'ARMED_HOME' || stateNow === 'ARMED_AWAY');\nconst isEntry = (stateNow === 'ENTRY_DELAY');\nconst isAlarm = (stateNow === 'ALARM');\n\nif (WINDOWS_RE.test(topic)) {\n  const isOpen =\n    (p && p.open === true) ||\n    (typeof p?.state === 'string' && p.state.toUpperCase() === 'OPEN') ||\n    (p && p.contact === false) ||\n    (typeof p === 'string' && p.toUpperCase() === 'OPEN');\n\n  if (!isOpen) return null;\n  if (isEntry || isArmed) return raiseAlarmNow({ from: topic, kind: 'WINDOW_OPEN' });\n  return null;\n}\n\nif (topic === DOOR_LIVING) {\n  const s = (typeof p === 'object' && p && p.state) ? String(p.state) : String(p || '');\n  const doorOpen = (s.toUpperCase() === 'OPEN');\n  if (!doorOpen) return null;\n\n  if (!isArmed) return null;\n  if (isAlarm)  return null;\n\n  return beginEntryDelay({ from: topic, kind: 'ENTRY_DOOR_OPEN' });\n}\n\nreturn null;\n",
+        "outputs": 4,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 610,
+        "y": 3030,
+        "wires": [
+            [
+                "14856626ef711a63"
+            ],
+            [
+                "cf394448c73db7d7"
+            ],
+            [
+                "70b9e05aed6b767b"
+            ],
+            [
+                "bf74678291803d7d"
+            ]
+        ]
+    },
+    {
+        "id": "14856626ef711a63",
+        "type": "mqtt out",
+        "z": "4ae513d322723fa7",
+        "name": "home/security/state",
+        "topic": "home/security/state",
+        "qos": "2",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "broker_localhost",
+        "x": 1020,
+        "y": 2880,
+        "wires": []
+    },
+    {
+        "id": "cf394448c73db7d7",
+        "type": "switch",
+        "z": "4ae513d322723fa7",
+        "name": "Popups",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "ENTRY_DELAY",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "ALARM",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1300,
+        "y": 3040,
+        "wires": [
+            [
+                "bc40db1976cbd099"
+            ],
+            [
+                "999b3a0890e5af29"
+            ]
+        ]
+    },
+    {
+        "id": "70b9e05aed6b767b",
+        "type": "mqtt out",
+        "z": "4ae513d322723fa7",
+        "name": "home/user1/actuators/light/living-room",
+        "topic": "home/user1/actuators/light/living-room",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "broker_localhost",
+        "x": 1060,
+        "y": 3100,
+        "wires": []
+    },
+    {
+        "id": "4d70a1adaa63c101",
+        "type": "ui_button",
+        "z": "4ae513d322723fa7",
+        "name": "DISARM",
+        "group": "cbd05f1c22458a48",
+        "order": 5,
+        "width": 3,
+        "height": 1,
+        "passthru": false,
+        "label": "DISARM",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "topicType": "str",
+        "x": 1400,
+        "y": 2920,
+        "wires": [
+            [
+                "22899aa56b974301",
+                "1febb95ba63db33d",
+                "95a45d820d57917b"
+            ]
+        ]
+    },
+    {
+        "id": "22899aa56b974301",
+        "type": "change",
+        "z": "4ae513d322723fa7",
+        "name": "STOP countdown + reset trigger",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "stop",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "x": 1800,
+        "y": 2920,
+        "wires": [
+            [
+                "013a1bab3cc241c8",
+                "436196036d02c73b"
+            ]
+        ]
+    },
+    {
+        "id": "bc40db1976cbd099",
+        "type": "change",
+        "z": "4ae513d322723fa7",
+        "name": "Set 30s (start)",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "30",
+                "tot": "num"
+            },
+            {
+                "t": "delete",
+                "p": "reset",
+                "pt": "msg"
+            }
+        ],
+        "x": 1790,
+        "y": 2840,
+        "wires": [
+            [
+                "013a1bab3cc241c8",
+                "436196036d02c73b"
+            ]
+        ]
+    },
+    {
+        "id": "013a1bab3cc241c8",
+        "type": "ui_template",
+        "z": "4ae513d322723fa7",
+        "group": "cbd05f1c22458a48",
+        "name": "Countdown 30s",
+        "order": 4,
+        "width": 3,
+        "height": 1,
+        "format": "<div style=\"font-size:30px; text-align:center; width:100%\">{{mm}}:{{ss}}</div>\n<script>\n(function(scope){\n  let duration = 30;\n  let remaining = duration;\n  let timer = null;\n  function update(){\n    scope.mm = String(Math.floor(remaining/60)).padStart(2,'0');\n    scope.ss = String(remaining%60).padStart(2,'0');\n    scope.$applyAsync();\n  }\n  update();\n\n  function start(){\n    if (timer) return;\n    timer = setInterval(()=>{\n      remaining -= 1;\n      if (remaining <= 0){\n        remaining = 0;\n        clearInterval(timer); timer=null;\n      }\n      update();\n    },1000);\n  }\n\n  scope.$watch('msg', function(msg){\n    if(!msg) return;\n    // numerico: imposta durata e parte\n    if (typeof msg.payload === 'number' && isFinite(msg.payload)){\n      duration = Math.max(0, Math.floor(msg.payload));\n      remaining = duration;\n      if (timer) { clearInterval(timer); timer=null; }\n      update();\n      if (duration>0) start();\n    }\n    // \"stop\": ferma e resetta a durata iniziale\n    if (msg.payload === 'stop'){\n      if (timer) { clearInterval(timer); timer=null; }\n      remaining = duration; update();\n    }\n  });\n\n  scope.$on('$destroy', function(){ if (timer) clearInterval(timer); });\n})(scope);\n</script>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 2110,
+        "y": 2840,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "436196036d02c73b",
+        "type": "trigger",
+        "z": "4ae513d322723fa7",
+        "name": "If you do not deactivate within 30 seconds ⇒ INTRUSION",
+        "op1": "",
+        "op2": "{\"payload\":\"INTRUSIONE\",\"topic\":\"alarm\"}",
+        "op1type": "nul",
+        "op2type": "json",
+        "duration": "30",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "reset",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 2210,
+        "y": 2920,
+        "wires": [
+            [
+                "35942e588372be72",
+                "427b23eeda9c0658"
+            ]
+        ]
+    },
+    {
+        "id": "999b3a0890e5af29",
+        "type": "ui_toast",
+        "z": "4ae513d322723fa7",
+        "position": "dialog",
+        "displayTime": "0",
+        "highlight": "red",
+        "sendall": true,
+        "outputs": 1,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "  ",
+        "name": "",
+        "x": 2610,
+        "y": 3040,
+        "wires": [
+            [
+                "439ce31adfcdfcfa"
+            ]
+        ]
+    },
+    {
+        "id": "35942e588372be72",
+        "type": "debug",
+        "z": "4ae513d322723fa7",
+        "name": "→ alarm actions",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2420,
+        "y": 2800,
+        "wires": []
+    },
+    {
+        "id": "1febb95ba63db33d",
+        "type": "debug",
+        "z": "4ae513d322723fa7",
+        "name": "debug",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1710,
+        "y": 2960,
+        "wires": []
+    },
+    {
+        "id": "95a45d820d57917b",
+        "type": "function",
+        "z": "4ae513d322723fa7",
+        "name": "function 22",
+        "func": "msg.payload = \"DISARM\";\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1720,
+        "y": 3060,
+        "wires": [
+            [
+                "10a1d5fea7b02fc3"
+            ]
+        ]
+    },
+    {
+        "id": "10a1d5fea7b02fc3",
+        "type": "mqtt out",
+        "z": "4ae513d322723fa7",
+        "name": "home/security/cmd",
+        "topic": "home/security/cmd",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "broker_localhost",
+        "x": 1950,
+        "y": 3060,
+        "wires": []
+    },
+    {
+        "id": "3d87d994286158b8",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "",
+        "topic": "home/security/state",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 290,
+        "y": 3400,
+        "wires": [
+            [
+                "19edc44cb4f1a977",
+                "d13551bb62c91b28"
+            ]
+        ]
+    },
+    {
+        "id": "19edc44cb4f1a977",
+        "type": "ui_text",
+        "z": "4ae513d322723fa7",
+        "group": "cbd05f1c22458a48",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "SECURITY STATE",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 630,
+        "y": 3400,
+        "wires": []
+    },
+    {
+        "id": "bf74678291803d7d",
+        "type": "mqtt out",
+        "z": "4ae513d322723fa7",
+        "name": "",
+        "topic": "",
+        "qos": "2",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "broker_localhost",
+        "x": 950,
+        "y": 3200,
+        "wires": []
+    },
+    {
+        "id": "873e9c14f8ede339",
+        "type": "inject",
+        "z": "4ae513d322723fa7",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "home/security/state",
+        "payload": "\"\"",
+        "payloadType": "str",
+        "x": 680,
+        "y": 2840,
+        "wires": [
+            [
+                "14856626ef711a63"
+            ]
+        ]
+    },
+    {
+        "id": "332169e4fa48d8df",
+        "type": "inject",
+        "z": "4ae513d322723fa7",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "home/security/identity",
+        "payload": "\"\"",
+        "payloadType": "str",
+        "x": 730,
+        "y": 3220,
+        "wires": [
+            [
+                "bf74678291803d7d"
+            ]
+        ]
+    },
+    {
+        "id": "d13551bb62c91b28",
+        "type": "switch",
+        "z": "4ae513d322723fa7",
+        "name": "Se DISARMED → reset timer",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "DISARMED",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 560,
+        "y": 3480,
+        "wires": [
+            [
+                "22899aa56b974301"
+            ]
+        ]
+    },
+    {
+        "id": "427b23eeda9c0658",
+        "type": "change",
+        "z": "4ae513d322723fa7",
+        "name": "ALARM",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "ALARM",
+                "tot": "str"
+            }
+        ],
+        "x": 2360,
+        "y": 3000,
+        "wires": [
+            [
+                "999b3a0890e5af29"
+            ]
+        ]
+    },
+    {
+        "id": "97056d60c3caccb6",
+        "type": "function",
+        "z": "4ae513d322723fa7",
+        "name": "function 23",
+        "func": "msg.payload = \"DISARM\";\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2910,
+        "y": 3040,
+        "wires": [
+            [
+                "37465149a9232381"
+            ]
+        ]
+    },
+    {
+        "id": "37465149a9232381",
+        "type": "mqtt out",
+        "z": "4ae513d322723fa7",
+        "name": "home/security/cmd",
+        "topic": "home/security/cmd",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "broker_localhost",
+        "x": 3110,
+        "y": 3040,
+        "wires": []
+    },
+    {
+        "id": "439ce31adfcdfcfa",
+        "type": "delay",
+        "z": "4ae513d322723fa7",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "3",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 2760,
+        "y": 3040,
+        "wires": [
+            [
+                "97056d60c3caccb6"
+            ]
+        ]
+    },
+    {
+        "id": "2ddeb516da6ff19e",
+        "type": "function",
+        "z": "4ae513d322723fa7",
+        "name": "function 24",
+        "func": "if(msg.payload === \"guest\")\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 3200,
+        "wires": [
+            [
+                "2c12db1f0eb98eda"
+            ]
+        ]
+    },
+    {
+        "id": "2c12db1f0eb98eda",
+        "type": "ui_toast",
+        "z": "4ae513d322723fa7",
+        "position": "dialog",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 1,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": " ",
+        "name": "",
+        "x": 510,
+        "y": 3200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "72188721e3925ce1",
+        "type": "comment",
+        "z": "4ae513d322723fa7",
+        "name": "umidità e temperature",
+        "info": "",
+        "x": 220,
+        "y": 3640,
+        "wires": []
+    },
+    {
+        "id": "627ea2eece7dfd8d",
+        "type": "mqtt out",
+        "z": "4ae513d322723fa7",
+        "name": "home/security/cmd",
+        "topic": "home/security/cmd",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "broker_localhost",
+        "x": 2190,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "e4ac7af0b054765c",
+        "type": "comment",
+        "z": "4ae513d322723fa7",
+        "name": "Windows",
+        "info": "",
+        "x": 760,
+        "y": 2200,
+        "wires": []
+    },
+    {
+        "id": "8587a6cc7645b362",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "home/sensors/windows/living-room",
+        "topic": "home/sensors/windows/living-room",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 780,
+        "y": 2300,
+        "wires": [
+            [
+                "546f6d586a7ed5a0"
+            ]
+        ]
+    },
+    {
+        "id": "8b9a7f50f2208e7a",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "home/sensors/windows/studio",
+        "topic": "home/sensors/windows/studio",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 770,
+        "y": 2360,
+        "wires": [
+            [
+                "c4dcd193bf5d26f1"
+            ]
+        ]
+    },
+    {
+        "id": "94aad5e779d2f615",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "home/sensors/windows/bedroom",
+        "topic": "home/sensors/windows/bedroom",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 770,
+        "y": 2420,
+        "wires": [
+            [
+                "31003b10e55e413d"
+            ]
+        ]
+    },
+    {
+        "id": "92814b24160b3e78",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "home/sensors/windows/kitchen",
+        "topic": "home/sensors/windows/kitchen",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 770,
+        "y": 2480,
+        "wires": [
+            [
+                "ecd4b45b2395e041"
+            ]
+        ]
+    },
+    {
+        "id": "d7be911756b92433",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "home/sensors/windows/bath-room",
+        "topic": "home/sensors/windows/bath-room",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 780,
+        "y": 2540,
+        "wires": [
+            [
+                "26315e067b4a5331"
+            ]
+        ]
+    },
+    {
+        "id": "546f6d586a7ed5a0",
+        "type": "ui_text",
+        "z": "4ae513d322723fa7",
+        "group": "6412d33ee5244df5",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Window",
+        "format": "{{msg.payload.state}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1010,
+        "y": 2300,
+        "wires": []
+    },
+    {
+        "id": "c4dcd193bf5d26f1",
+        "type": "ui_text",
+        "z": "4ae513d322723fa7",
+        "group": "399f7fa3eb5f5073",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Window",
+        "format": "{{msg.payload.state}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1020,
+        "y": 2360,
+        "wires": []
+    },
+    {
+        "id": "31003b10e55e413d",
+        "type": "ui_text",
+        "z": "4ae513d322723fa7",
+        "group": "015361052332870d",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Window",
+        "format": "{{msg.payload.state}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1030,
+        "y": 2420,
+        "wires": []
+    },
+    {
+        "id": "ecd4b45b2395e041",
+        "type": "ui_text",
+        "z": "4ae513d322723fa7",
+        "group": "6376ecc6f540863b",
+        "order": 8,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Window",
+        "format": "{{msg.payload.state}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1020,
+        "y": 2480,
+        "wires": []
+    },
+    {
+        "id": "26315e067b4a5331",
+        "type": "ui_text",
+        "z": "4ae513d322723fa7",
+        "group": "631a21d3c8abf6c0",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Window",
+        "format": "{{msg.payload.state}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1040,
+        "y": 2540,
+        "wires": []
+    },
+    {
+        "id": "b9432b9dd2991386",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "T in",
+        "topic": "home/+/sensors/temperature/+",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 180,
+        "y": 3735,
+        "wires": [
+            [
+                "44540fdd64f819eb"
+            ]
+        ]
+    },
+    {
+        "id": "5c49a79e7e1a65f5",
+        "type": "mqtt in",
+        "z": "4ae513d322723fa7",
+        "name": "RH in",
+        "topic": "home/+/sensors/humidity/+",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "broker_localhost",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 180,
+        "y": 3785,
+        "wires": [
+            [
+                "44540fdd64f819eb"
+            ]
+        ]
+    },
+    {
+        "id": "44540fdd64f819eb",
+        "type": "function",
+        "z": "4ae513d322723fa7",
+        "name": "Normalize env (T/RH +user,+room)",
+        "func": "\nconst parts = (msg.topic||\"\").split(\"/\");\nconst user = parts[1];\nconst kind = parts[3];\nconst room = parts[4];\nif(!user || !room || !kind) return null;\nlet v = msg.payload;\nif (typeof v === 'object' && v && 'value' in v) v = v.value;\nv = Number(v);\nif (!isFinite(v)) return null;\nmsg.user = user; msg.room = room;\nif (kind === 'temperature'){\n  msg.measure = 't';\n  msg.payload = { value: v, unit: 'C' };\n} else if (kind === 'humidity'){\n  msg.measure = 'rh';\n  msg.payload = { value: v, unit: '%' };\n} else return null;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 3755,
+        "wires": [
+            [
+                "f0beadb9d3403f26"
+            ]
+        ]
+    },
+    {
+        "id": "f0beadb9d3403f26",
+        "type": "function",
+        "z": "4ae513d322723fa7",
+        "name": "Room HVAC brain (comfort, dp, mode, cmds)",
+        "func": "\nconst DEF = {\n  t_heat: 21.0,\n  t_cool: 24.0,\n  rh_target: 50,\n  t_band: 0.5,\n  rh_band: 5,\n  minRun_ms: 5*60*1000,\n  minOff_ms: 5*60*1000,\n  minTforDry: 18.0,\n  preferRadiatorForHeat: true\n};\nfunction cfgFor(user, room){\n  const g = global.get('hvac_cfg') || {};\n  const u = (g[user] && g[user][room]) ? g[user][room] : {};\n  return Object.assign({}, DEF, u);\n}\nfunction dewPointC(tC, rh){ const a=17.62,b=243.12, g=Math.log(rh/100)+(a*tC)/(b+tC); return (b*g)/(a-g); }\nfunction comfortLabel(t,rh){ if(t>=22&&t<=24&&rh>=40&&rh<=55)return \"Excellent\"; if(t>=20&&t<=25&&rh>=35&&rh<=60)return \"Good\"; if(rh>65)return \"Humid\"; if(rh<30)return \"Dry\"; return \"OK\"; }\nfunction moldRisk(t,rh,dp){ return (rh>65 && dp>16) ? \"Risk of mould\" : \"No Risk\"; }\n\nlet state = context.get('state') || {};\nlet rows = [];\nconst user = msg.user, room = msg.room, m = msg.measure;\nif (!user || !room || !m) return null;\nconst now = Date.now();\nstate[user] = state[user] || {};\nconst s = state[user][room] = state[user][room] || { ac:{}, rad:{} };\nif (m==='t'){ s.t = Number(msg.payload.value); s.ts_t = now; }\nif (m==='rh'){ s.rh = Number(msg.payload.value); s.ts_h = now; }\nconst cfg = cfgFor(user, room);\n\nconst REC_MS = 5*60*1000;\nlet telemetry=null, acModeCmd=null, acSetCmd=null, radCmd=null;\nconst haveFresh = isFinite(s.t) && isFinite(s.rh) && (now - Math.max(s.ts_t||0, s.ts_h||0) < REC_MS);\nif (haveFresh){\n  const dp = dewPointC(s.t, s.rh);\n  s.dp = Number(dp.toFixed(1));\n  s.comfort = comfortLabel(s.t, s.rh);\n  s.risk = moldRisk(s.t, s.rh, dp);\n\n  const needHeat = (s.t < (cfg.t_heat - cfg.t_band));\n  const needCool = (s.t > (cfg.t_cool + cfg.t_band));\n  const tempOK = !needHeat && !needCool;\n  const needDry = tempOK && (s.rh > (cfg.rh_target + cfg.rh_band));\n  const okRH = (s.rh <= (cfg.rh_target + cfg.rh_band));\n\n  let targetMode = \"OFF\"; let reason=\"\";\n  if (needHeat){ targetMode=\"HEAT\"; reason=`T ${s.t.toFixed(1)}<${(cfg.t_heat-cfg.t_band).toFixed(1)}`; }\n  else if (needCool){ targetMode=\"COOL\"; reason=`T ${s.t.toFixed(1)}>${(cfg.t_cool+cfg.t_band).toFixed(1)}`; }\n  else if (needDry && s.t >= cfg.minTforDry){ targetMode=\"DRY\"; reason=`RH ${Math.round(s.rh)}>${cfg.rh_target+cfg.rh_band}`; }\n  else { targetMode=\"OFF\"; reason = tempOK && okRH ? \"In the band\" : (s.t < cfg.minTforDry && needDry ? \"High RH but cold air\" : \"Idle\"); }\n\n  const ac = s.ac = s.ac || { mode:\"off\", on:false, lastSwitch:0, lastOn:0 };\n  const rad = s.rad = s.rad || { level:0, lastChange:0 };\n  function acCanTurnOn(){ if (ac.on) return true; return (now - (ac.lastSwitch||0)) >= cfg.minOff_ms; }\n  function acCanTurnOff(){ if (!ac.on) return true; return (now - (ac.lastOn||0)) >= cfg.minRun_ms; }\n  function setAC(newMode, setpoint){\n    if (newMode===\"OFF\"){\n      if (ac.on && !acCanTurnOff()) return; \n      if (ac.mode!==\"off\"){\n        ac.mode=\"off\"; ac.on=false; ac.lastSwitch=now;\n        acModeCmd = { topic:`home/${user}/actuators/ac/${room}/mode`, payload:\"off\" };\n      }\n      return;\n    }\n    if (!acCanTurnOn()) return; \n    const desired = newMode.toLowerCase();\n    if (ac.mode!==desired || !ac.on){\n      ac.mode=desired; ac.on=true; ac.lastSwitch=now; ac.lastOn=now;\n      acModeCmd = { topic:`home/${user}/actuators/ac/${room}/mode`, payload:desired };\n    }\n    if (setpoint!=null && isFinite(setpoint)){\n      acSetCmd = { topic:`home/${user}/actuators/ac/${room}/setpoint`, payload:Number(setpoint.toFixed(1)) };\n    }\n  }\n  function setRadiator(level){\n    level = Math.max(0, Math.min(100, Math.round(level)));\n    if (rad.level!==level){ rad.level=level; rad.lastChange=now; radCmd = { topic:`home/${user}/actuators/radiator/${room}/level`, payload:level }; }\n  }\n\n  if (targetMode===\"HEAT\"){\n    const delta = (cfg.t_heat - s.t);\n    const level = Math.min(100, Math.max(20, Math.round(delta*40)));\n    setRadiator(level);\n    if (cfg.preferRadiatorForHeat){ setAC(\"OFF\"); } else { setAC(\"HEAT\", cfg.t_heat); }\n  } else if (targetMode===\"COOL\"){\n    setRadiator(0);\n    setAC(\"COOL\", cfg.t_cool);\n  } else if (targetMode===\"DRY\"){\n    setRadiator(0);\n    setAC(\"DRY\", null);\n  } else {\n    setRadiator(0);\n    setAC(\"OFF\");\n  }\n\n  s.mode = targetMode; s.reason = reason;\n  telemetry = {\n    topic: `home/${user}/telemetry/room/${room}`,\n    payload: {\n      user, room,\n      tC: s.t, rh: s.rh, dpC: s.dp,\n      comfort: s.comfort, risk: s.risk,\n      mode: s.mode, reason: s.reason,\n      setpoints: { t_heat: cfg.t_heat, t_cool: cfg.t_cool, rh: cfg.rh_target },\n      ts: now\n    }\n  };\n}\n\nObject.keys(state).sort().forEach(u=>{\n  Object.keys(state[u]).sort().forEach(r=>{\n    const x = state[u][r];\n    rows.push({ user:u, room:r, t:x.t??null, rh:x.rh??null, dp:x.dp??null, comfort:x.comfort||'', risk:x.risk||'', mode:x.mode||'OFF' });\n  });\n});\ncontext.set('state', state);\nreturn [ { payload:{ rooms: rows } }, telemetry, acModeCmd, acSetCmd, radCmd ];",
+        "outputs": 5,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 3760,
+        "wires": [
+            [
+                "d49bdefcdabc8685"
+            ],
+            [
+                "902c7220b6f9fe4f"
+            ],
+            [
+                "2528a8b6334f304a"
+            ],
+            [
+                "612bc12f792bd9bc"
+            ],
+            [
+                "c61ab0030599d409"
+            ]
+        ]
+    },
+    {
+        "id": "d49bdefcdabc8685",
+        "type": "ui_template",
+        "z": "4ae513d322723fa7",
+        "group": "68cc5f2a63b3d6dd",
+        "name": "Home health (HVAC)",
+        "order": 1,
+        "width": 15,
+        "height": 6,
+        "format": "<div>\n  <table style=\"width:100%; border-collapse:collapse; font-size:14px;\">\n    <thead>\n      <tr>\n        <th style=\"text-align:left; border-bottom:1px solid #ddd; padding:4px;\">User</th>\n        <th style=\"text-align:left; border-bottom:1px solid #ddd; padding:4px;\">Room</th>\n        <th style=\"text-align:right; border-bottom:1px solid #ddd; padding:4px;\">T (°C)</th>\n        <th style=\"text-align:right; border-bottom:1px solid #ddd; padding:4px;\">RH (%)</th>\n        <th style=\"text-align:right; border-bottom:1px solid #ddd; padding:4px;\">DP (°C)</th>\n        <th style=\"text-align:left; border-bottom:1px solid #ddd; padding:4px;\">Comfort</th>\n        <th style=\"text-align:left; border-bottom:1px solid #ddd; padding:4px;\">Risk</th>\n        <th style=\"text-align:left; border-bottom:1px solid #ddd; padding:4px;\">Mode</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr ng-repeat=\"r in (msg.payload.rooms||[]) track by (r.user + ':' + r.room)\">\n        <td style=\"padding:4px;\">{{r.user}}</td>\n        <td style=\"padding:4px;\">{{r.room}}</td>\n        <td style=\"padding:4px; text-align:right;\">{{r.t | number:1}}</td>\n        <td style=\"padding:4px; text-align:right;\">{{r.rh | number:0}}</td>\n        <td style=\"padding:4px; text-align:right;\">{{r.dp | number:1}}</td>\n        <td style=\"padding:4px;\">{{r.comfort}}</td>\n        <td style=\"padding:4px;\" ng-style=\"{'color': (r.risk==='Rischio muffa') ? '#ca3838' : '#0a7d0a'}\">{{r.risk}}</td>\n        <td style=\"padding:4px;\">{{r.mode}}</td>\n      </tr>\n    </tbody>\n  </table>\n</div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 1150,
+        "y": 3675,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "902c7220b6f9fe4f",
+        "type": "mqtt out",
+        "z": "4ae513d322723fa7",
+        "name": "Telemetry room",
+        "topic": "",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "broker_localhost",
+        "x": 1100,
+        "y": 3755,
+        "wires": []
+    },
+    {
+        "id": "2528a8b6334f304a",
+        "type": "mqtt out",
+        "z": "4ae513d322723fa7",
+        "name": "AC mode",
+        "topic": "",
+        "qos": "2",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "broker_localhost",
+        "x": 1080,
+        "y": 3795,
+        "wires": []
+    },
+    {
+        "id": "612bc12f792bd9bc",
+        "type": "mqtt out",
+        "z": "4ae513d322723fa7",
+        "name": "AC setpoint",
+        "topic": "",
+        "qos": "1",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "broker_localhost",
+        "x": 1090,
+        "y": 3835,
+        "wires": []
+    },
+    {
+        "id": "c61ab0030599d409",
+        "type": "mqtt out",
+        "z": "4ae513d322723fa7",
+        "name": "Radiator level",
+        "topic": "",
+        "qos": "1",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "broker_localhost",
+        "x": 1090,
+        "y": 3875,
+        "wires": []
+    },
+    {
+        "id": "97ba28d7229a9782",
+        "type": "ui_spacer",
+        "z": "4ae513d322723fa7",
+        "name": "spacer",
+        "group": "cbd05f1c22458a48",
+        "order": 2,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "9c6a05e9f190fd01",
+        "type": "ui_spacer",
+        "z": "4ae513d322723fa7",
+        "name": "spacer",
+        "group": "cbd05f1c22458a48",
+        "order": 6,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "e354e1b45b0d31ab",
+        "type": "ui_spacer",
+        "z": "4ae513d322723fa7",
+        "name": "spacer",
+        "group": "c19fc1c181c03ef6",
+        "order": 1,
+        "width": 3,
+        "height": 1
+    },
+    {
+        "id": "6c57aa04957d960a",
+        "type": "ui_spacer",
+        "z": "4ae513d322723fa7",
+        "name": "spacer",
+        "group": "c19fc1c181c03ef6",
+        "order": 3,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "b7276b89238c9720",
+        "type": "ui_spacer",
+        "z": "4ae513d322723fa7",
+        "name": "spacer",
+        "group": "c19fc1c181c03ef6",
+        "order": 4,
+        "width": 3,
+        "height": 1
+    },
+    {
+        "id": "2c60bd53817ae6f3",
+        "type": "ui_spacer",
+        "z": "4ae513d322723fa7",
+        "name": "spacer",
+        "group": "c19fc1c181c03ef6",
+        "order": 5,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "b706ab9fec43f458",
+        "type": "ui_spacer",
+        "z": "4ae513d322723fa7",
+        "name": "spacer",
+        "group": "6412d33ee5244df5",
+        "order": 4,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "e0e56df8b144c440",
+        "type": "ui_spacer",
+        "z": "4ae513d322723fa7",
+        "name": "spacer",
+        "group": "399f7fa3eb5f5073",
+        "order": 5,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "5945fcf8bb4c22ee",
+        "type": "ui_spacer",
+        "z": "4ae513d322723fa7",
+        "name": "spacer",
+        "group": "6376ecc6f540863b",
+        "order": 2,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "9c62b8234a651f99",
+        "type": "ui_spacer",
+        "z": "4ae513d322723fa7",
+        "name": "spacer",
+        "group": "6376ecc6f540863b",
+        "order": 5,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "3947d6d88cd53e8e",
+        "type": "ui_spacer",
+        "z": "4ae513d322723fa7",
+        "name": "spacer",
+        "group": "6376ecc6f540863b",
+        "order": 7,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "9e9df17231393f22",
+        "type": "ui_spacer",
+        "z": "4ae513d322723fa7",
+        "name": "spacer",
+        "group": "015361052332870d",
+        "order": 5,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "22e18587b4d0a4d6",
+        "type": "ui_spacer",
+        "z": "4ae513d322723fa7",
+        "name": "spacer",
+        "group": "631a21d3c8abf6c0",
+        "order": 4,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "28af2acdddb9223b",
+        "type": "ui_spacer",
+        "z": "4ae513d322723fa7",
+        "name": "spacer",
+        "group": "78864000e2e9a37d",
+        "order": 3,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "broker_localhost",
+        "type": "mqtt-broker",
+        "name": "localhost",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": false,
+        "keepalive": "60",
+        "cleansession": true
+    },
+    {
+        "id": "cbd05f1c22458a48",
+        "type": "ui_group",
+        "name": "Security",
+        "tab": "dashboard_tab",
+        "order": 3,
+        "disp": true,
+        "width": 7,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "6412d33ee5244df5",
+        "type": "ui_group",
+        "name": "Living room",
+        "tab": "dashboard_tab",
+        "order": 6,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "399f7fa3eb5f5073",
+        "type": "ui_group",
+        "name": "Study room",
+        "tab": "dashboard_tab",
+        "order": 7,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "015361052332870d",
+        "type": "ui_group",
+        "name": "Bedroom",
+        "tab": "dashboard_tab",
+        "order": 9,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "6376ecc6f540863b",
+        "type": "ui_group",
+        "name": "Kitchen",
+        "tab": "dashboard_tab",
+        "order": 8,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "631a21d3c8abf6c0",
+        "type": "ui_group",
+        "name": "Bathroom",
+        "tab": "dashboard_tab",
+        "order": 10,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "dashboard_group",
+        "type": "ui_group",
+        "name": "User health",
+        "tab": "dashboard_tab",
+        "order": 2,
+        "disp": true,
+        "width": "13",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "78864000e2e9a37d",
+        "type": "ui_group",
+        "name": "Home",
+        "tab": "dashboard_tab",
+        "order": 1,
+        "disp": true,
+        "width": 12,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "c19fc1c181c03ef6",
+        "type": "ui_group",
+        "name": "Charts",
+        "tab": "dashboard_tab",
+        "order": 5,
+        "disp": true,
+        "width": 16,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "68cc5f2a63b3d6dd",
+        "type": "ui_group",
+        "name": "Home health",
+        "tab": "dashboard_tab",
+        "order": 4,
+        "disp": true,
+        "width": "15",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "dashboard_tab",
+        "type": "ui_tab",
+        "name": "Stato",
+        "icon": "dashboard",
+        "order": 1
+    },
+    {
+        "id": "35fe936e1a60bfe2",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6"
+        }
+    }
+]
